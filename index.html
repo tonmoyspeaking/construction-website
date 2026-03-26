@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KD Constructions</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg-2: #111111;
+      --bg-3: #181818;
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f5f7;
+      --text-muted: #86868b;
+      --accent: #d4a853;
+      --accent-dim: rgba(212,168,83,0.12);
+      --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      transition: background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: inline-flex; align-items: center;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 80px; width: auto;
+      display: block;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.2px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: #000;
+      padding: 10px 24px; border-radius: 980px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.88; transform: scale(1.02); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 140px 40px 100px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,168,83,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(212,168,83,0.06) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,168,83,0.25);
+      color: var(--accent); border-radius: 980px;
+      padding: 8px 18px; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      margin-bottom: 32px; position: relative; z-index: 1;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 700; letter-spacing: -2.5px; line-height: 1.03;
+      position: relative; z-index: 1; margin-bottom: 28px;
+    }
+    .hero-title .line-muted { color: var(--text-muted); }
+    .hero-title .line-accent { color: var(--accent); }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted); max-width: 540px;
+      position: relative; z-index: 1; margin-bottom: 52px;
+      font-weight: 400; line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000;
+      padding: 16px 40px; border-radius: 980px;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 16px 40px; border-radius: 980px;
+      border: 1px solid var(--border);
+      font-size: 1rem; font-weight: 500; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.06); transform: translateY(-1px); }
+    .hero-stats {
+      display: flex; gap: 60px; margin-top: 90px;
+      position: relative; z-index: 1;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 2.2rem; font-weight: 700; letter-spacing: -1px;
+      color: var(--text);
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.3px; }
+    .scroll-indicator {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%); z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .scroll-indicator span { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--text-muted), transparent);
+      animation: scrollDown 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollDown {
+      0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 120px 60px; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700; letter-spacing: -1.5px; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 1.1rem;
+      max-width: 520px; line-height: 1.75;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--bg); }
+    .services-head { max-width: 1200px; margin: 0 auto 80px; }
+    .services-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    }
+    .service-card {
+      background: var(--bg-2);
+      padding: 44px 40px;
+      border: 1px solid var(--border);
+      transition: background 0.3s, transform 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .service-card:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover { background: var(--bg-3); transform: translateY(-4px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 28px;
+    }
+    .service-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 14px; letter-spacing: -0.3px; }
+    .service-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+    }
+    .about-visual {
+      position: relative; height: 500px;
+    }
+    .about-card-main {
+      position: absolute; inset: 0;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 36px;
+    }
+    .about-card-main::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(212,168,83,0.06) 0%, transparent 60%);
+    }
+    .building-graphic {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 40%;
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 6px; padding: 40px 40px 0;
+    }
+    .building {
+      background: linear-gradient(to top, rgba(212,168,83,0.3), rgba(212,168,83,0.05));
+      border: 1px solid rgba(212,168,83,0.15);
+      border-bottom: none; border-radius: 3px 3px 0 0;
+      flex: 1; position: relative;
+    }
+    .building::after {
+      content: '';
+      position: absolute; top: 12px; left: 8px; right: 8px;
+      height: 1px; background: rgba(212,168,83,0.15);
+      box-shadow: 0 18px 0 rgba(212,168,83,0.1), 0 36px 0 rgba(212,168,83,0.08);
+    }
+    .about-card-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.2);
+      color: var(--accent); border-radius: 980px;
+      padding: 6px 14px; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.5px; width: fit-content; margin-bottom: 12px;
+      position: relative; z-index: 1;
+    }
+    .about-card-text { font-size: 1rem; font-weight: 500; position: relative; z-index: 1; }
+    .about-card-sub { font-size: 0.82rem; color: var(--text-muted); position: relative; z-index: 1; }
+
+    .about-floating {
+      position: absolute; bottom: -20px; right: -20px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px;
+      width: 180px;
+    }
+    .about-floating .big-num {
+      font-size: 2.4rem; font-weight: 700; letter-spacing: -1px; color: var(--accent);
+    }
+    .about-floating .small-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+    .about-content .section-sub { margin-bottom: 40px; }
+    .about-features { display: flex; flex-direction: column; gap: 20px; }
+    .feature-row {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px; border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .feature-row:hover { background: rgba(255,255,255,0.04); border-color: rgba(212,168,83,0.2); }
+    .feature-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0; margin-top: 6px;
+    }
+    .feature-row h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .feature-row p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── PROCESS ── */
+    #process { background: var(--bg); }
+    .process-inner { max-width: 1200px; margin: 0 auto; }
+    .process-head { max-width: 560px; margin-bottom: 80px; }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      position: relative;
+    }
+    .process-step {
+      padding: 40px 32px;
+      background: var(--bg-2); border: 1px solid var(--border);
+      position: relative; transition: background 0.3s;
+    }
+    .process-step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .process-step:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .process-step:hover { background: var(--bg-3); }
+    .step-num {
+      font-size: 3rem; font-weight: 800; letter-spacing: -2px;
+      color: rgba(212,168,83,0.15); line-height: 1; margin-bottom: 20px;
+    }
+    .process-step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+    .process-step p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;
+    }
+    .contact-info .section-sub { margin-bottom: 48px; }
+    .contact-items { display: flex; flex-direction: column; gap: 28px; }
+    .contact-item {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item h4 { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+    .contact-item p { font-size: 0.95rem; font-weight: 500; }
+
+    .contact-form {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 48px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.8rem; font-weight: 600;
+      color: var(--text-muted); letter-spacing: 0.5px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 16px; color: var(--text);
+      font-family: var(--font); font-size: 0.95rem;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none; border-color: rgba(212,168,83,0.5);
+      background: rgba(212,168,83,0.03);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      width: 100%; background: var(--accent); color: #000;
+      border: none; border-radius: 980px;
+      padding: 16px 40px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; font-family: var(--font);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 60px 60px 40px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding-bottom: 48px; border-bottom: 1px solid var(--border);
+      gap: 60px;
+    }
+    .footer-brand .nav-logo { display: inline-flex; margin-bottom: 12px; }
+    .footer-brand .nav-logo img { height: 48px; }
+    .footer-brand p { font-size: 0.88rem; color: var(--text-muted); max-width: 260px; line-height: 1.6; }
+    .footer-links { display: flex; gap: 60px; }
+    .footer-col h5 {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.9rem; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--text); }
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-size: 0.82rem; color: var(--text-muted); }
+    .footer-bottom span { color: var(--accent); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav { padding: 18px 32px; }
+      section { padding: 90px 32px; }
+      .services-grid, .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .service-card:nth-child(2) { border-radius: 0 var(--radius) var(--radius) 0; }
+      .service-card:nth-child(3) { border-radius: var(--radius) 0 0 var(--radius); }
+      .service-card:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+      .process-step:nth-child(2) { border-radius: 0 var(--radius) var(--radius) 0; }
+      .process-step:nth-child(3) { border-radius: var(--radius) 0 0 var(--radius); }
+      .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+      .about-visual { height: 360px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      .hero-stats { gap: 32px; flex-wrap: wrap; justify-content: center; }
+      .services-grid, .process-steps { grid-template-columns: 1fr; gap: 2px; }
+      .service-card:first-child,
+      .service-card:last-child,
+      .service-card:nth-child(2),
+      .service-card:nth-child(3) { border-radius: 0; }
+      .service-card:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+      .service-card:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+      .process-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+      .process-step:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+      .process-step:nth-child(2),
+      .process-step:nth-child(3) { border-radius: 0; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 32px 24px; }
+      .footer-top { flex-direction: column; }
+      .footer-links { flex-wrap: wrap; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo"><img src="image.png" alt="KD Constructions" /></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div style="
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('shiv.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.25;
+    "></div>
+    <div style="
+      position: absolute; inset: 0; z-index: 0;
+      background: rgba(212,168,83,0.08);
+      mix-blend-mode: color;
+    "></div>
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge">Est. 2004 &mdash; Trusted Government Infrastructure Partner</div>
+    <h1 class="hero-title">
+      <span class="line-muted">Building India's</span><br>
+      <span>Railway</span><br>
+      <span class="line-accent">Infrastructure.</span>
+    </h1>
+    <p class="hero-subtitle">
+      KD Constructions is a trusted name in government infrastructure development&mdash;specialising in railway stations, carsheds, and critical rail infrastructure for Indian Railways across Maharashtra.
+    </p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Our Services</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">20<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="font-size:1.5rem;letter-spacing:-0.5px">Maharashtra</div>
+        <div class="stat-label">State Operations</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="font-size:1.5rem;letter-spacing:-0.5px">Indian Railways</div>
+        <div class="stat-label">Govt. Partner</div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-head reveal">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Railway &amp; government<br>infrastructure specialists.</h2>
+      <p class="section-sub">From railway stations to carsheds and critical rail infrastructure, we bring 20+ years of specialised expertise to every government project across Maharashtra.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">&#128643;</div>
+        <h3>Railway Station Construction</h3>
+        <p>Complete construction of railway stations including platforms, concourses, passenger amenities, and structural works&mdash;as delivered at Uran and Nhava Sheva for Indian Railways.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">&#128664;</div>
+        <h3>Railway Carshed Construction</h3>
+        <p>Purpose-built maintenance depots and carsheds for rolling stock, designed to Indian Railways specifications with durable civil and structural engineering.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">&#127963;</div>
+        <h3>Government Infrastructure Development</h3>
+        <p>Execution of government-tendered civil infrastructure projects with full regulatory compliance, quality assurance, and on-time delivery across Maharashtra.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">&#128296;</div>
+        <h3>Railway Infrastructure Projects</h3>
+        <p>Essential railway infrastructure including track-side civil works, retaining structures, drainage systems, and ancillary rail facilities for Indian Railways.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">&#128205;</div>
+        <h3>Civil &amp; Structural Works</h3>
+        <p>Heavy civil engineering works including earthwork, foundations, RCC structures, and site development in support of large-scale rail infrastructure projects.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">&#128737;</div>
+        <h3>Project Management</h3>
+        <p>End-to-end oversight of government construction projects&mdash;from tender to handover&mdash;with rigorous site supervision, progress reporting, and compliance management.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  <section id="projects" style="padding: 120px 60px; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="reveal" style="margin-bottom: 72px;">
+        <div class="section-label">Featured Projects</div>
+        <h2 class="section-title">Built by us.<br>Served by millions.</h2>
+        <p class="section-sub">Landmark railway infrastructure delivered for Indian Railways across Maharashtra.</p>
+      </div>
+
+      <!-- Uran Railway Station -->
+      <div class="reveal reveal-delay-1" style="
+        background: var(--bg-3);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        position: relative;
+        transition: border-color 0.3s;
+      " onmouseenter="this.style.borderColor='rgba(212,168,83,0.35)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.08)'">
+
+        <!-- Gold top bar -->
+        <div style="height: 3px; background: linear-gradient(90deg, var(--accent), rgba(212,168,83,0.2));"></div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; min-height: 520px;">
+
+          <!-- Photo -->
+          <div style="position: relative; overflow: hidden; min-height: 400px;">
+            <img src="uran.png" alt="Uran Railway Station"
+              style="width: 100%; height: 100%; object-fit: cover; display: block;
+                     transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);"
+              onmouseenter="this.style.transform='scale(1.04)'"
+              onmouseleave="this.style.transform='scale(1)'">
+            <div style="
+              position: absolute; inset: 0;
+              background: linear-gradient(90deg, transparent 60%, var(--bg-3) 100%),
+                          linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 40%);
+            "></div>
+            <!-- Inauguration badge -->
+            <div style="
+              position: absolute; bottom: 24px; left: 24px;
+              background: var(--accent); color: #000;
+              padding: 7px 16px; border-radius: 980px;
+              font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px;
+            ">Inaugurated January 2024</div>
+          </div>
+
+          <!-- Content -->
+          <div style="padding: 56px 52px; display: flex; flex-direction: column; justify-content: center;">
+            <div style="
+              display: inline-flex; align-items: center; gap: 8px;
+              background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.25);
+              color: var(--accent); border-radius: 980px;
+              padding: 6px 16px; font-size: 0.75rem; font-weight: 700;
+              letter-spacing: 0.8px; text-transform: uppercase;
+              width: fit-content; margin-bottom: 24px;
+            ">&#128643; Railway Station</div>
+
+            <h3 style="font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 700; letter-spacing: -1px; line-height: 1.15; margin-bottom: 20px;">
+              Uran Railway Station
+            </h3>
+
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 36px;">
+              Successful completion of Uran Railway Station — a significant milestone in enhancing connectivity for Navi Mumbai. Part of the <strong style="color: var(--text);">Belapur–Seawoods–Uran railway corridor</strong> spanning 27 kilometres, featuring two platforms and four tracks. Connects JNPT, Navi Mumbai SEZ, and the upcoming Navi Mumbai International Airport.
+            </p>
+
+            <!-- Stats row -->
+            <div style="display: flex; gap: 32px; flex-wrap: wrap; padding: 28px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 36px;">
+              <div>
+                <div style="font-size: 1.6rem; font-weight: 700; letter-spacing: -1px; color: var(--accent);">27 km</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Corridor Length</div>
+              </div>
+              <div>
+                <div style="font-size: 1.6rem; font-weight: 700; letter-spacing: -1px; color: var(--accent);">2</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Platforms</div>
+              </div>
+              <div>
+                <div style="font-size: 1.6rem; font-weight: 700; letter-spacing: -1px; color: var(--accent);">4</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Tracks</div>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <span style="padding: 5px 13px; border-radius: 980px; border: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted);">Indian Railways</span>
+              <span style="padding: 5px 13px; border-radius: 980px; border: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted);">Navi Mumbai</span>
+              <span style="padding: 5px 13px; border-radius: 980px; border: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted);">JNPT Connectivity</span>
+              <span style="padding: 5px 13px; border-radius: 980px; border: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted);">2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="about-card-main">
+          <div class="building-graphic">
+            <div class="building" style="height:55%"></div>
+            <div class="building" style="height:80%"></div>
+            <div class="building" style="height:65%"></div>
+            <div class="building" style="height:90%"></div>
+            <div class="building" style="height:50%"></div>
+            <div class="building" style="height:70%"></div>
+          </div>
+          <div class="about-card-tag">&#9679; KD Constructions</div>
+          <div class="about-card-text">Building Maharashtra's railway future since 2004.</div>
+          <div class="about-card-sub">Railway &amp; Government Infrastructure</div>
+        </div>
+        <div class="about-floating reveal reveal-delay-2">
+          <div class="big-num">20+</div>
+          <div class="small-text">Years of railway infrastructure expertise</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-label reveal">Who We Are &mdash; Leadership</div>
+        <h2 class="section-title reveal reveal-delay-1">Two decades of<br>railway excellence.</h2>
+        <p class="section-sub reveal reveal-delay-2">Founded in 2004, Kailashchandra Dilipkumar Constructions Pvt. Ltd. specialises in railway construction projects across Maharashtra. Our key projects include railway stations at Uran and Nhava Sheva, railway carsheds, and essential railway infrastructure for Indian Railways. Based in Navi Mumbai, we continue to expand our presence across Maharashtra.</p>
+        <div style="margin-bottom:32px" class="reveal reveal-delay-2">
+          <p style="font-size:0.78rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px">Board of Directors</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.02)">
+              <p style="font-size:0.9rem;font-weight:600">Kailash Gindodia</p>
+              <p style="font-size:0.8rem;color:var(--text-muted)">Director</p>
+            </div>
+            <div style="padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.02)">
+              <p style="font-size:0.9rem;font-weight:600">Sarita Kailash Gindodia</p>
+              <p style="font-size:0.8rem;color:var(--text-muted)">Director</p>
+            </div>
+            <div style="padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.02)">
+              <p style="font-size:0.9rem;font-weight:600">Mohanlal Shankarlal Gindodiya</p>
+              <p style="font-size:0.8rem;color:var(--text-muted)">Director</p>
+            </div>
+            <div style="padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.02)">
+              <p style="font-size:0.9rem;font-weight:600">Shiv Kailash Gindodia</p>
+              <p style="font-size:0.8rem;color:var(--text-muted)">Director</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-features">
+          <div class="feature-row reveal reveal-delay-2">
+            <div class="feature-dot"></div>
+            <div>
+              <h4>Indian Railways trusted contractor</h4>
+              <p>Long-standing partnership with Indian Railways for the construction of stations, carsheds, and essential rail infrastructure across Maharashtra.</p>
+            </div>
+          </div>
+          <div class="feature-row reveal reveal-delay-3">
+            <div class="feature-dot"></div>
+            <div>
+              <h4>Key projects: Uran &amp; Nhava Sheva</h4>
+              <p>Delivered landmark railway stations at Uran and Nhava Sheva, two of Maharashtra's strategically important new railway corridors.</p>
+            </div>
+          </div>
+          <div class="feature-row reveal reveal-delay-4">
+            <div class="feature-dot"></div>
+            <div>
+              <h4>Government compliance &amp; quality</h4>
+              <p>Fully MSME registered, GST compliant, and operating to Indian Railways and government infrastructure quality standards on every project.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="process-inner">
+      <div class="process-head">
+        <div class="section-label reveal">How We Work</div>
+        <h2 class="section-title reveal reveal-delay-1">A process built<br>for government projects.</h2>
+        <p class="section-sub reveal reveal-delay-2">From tender to handover, our project workflow is designed for the rigour and transparency that government infrastructure contracts demand.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-num">01</div>
+          <h3>Tender &amp; Bid</h3>
+          <p>We evaluate government tenders, prepare detailed bids with full technical documentation, and secure contracts with Indian Railways and government bodies.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-num">02</div>
+          <h3>Planning &amp; Design</h3>
+          <p>Our engineers prepare detailed project plans, drawings, and construction schedules aligned to Indian Railways specifications and government standards.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-num">03</div>
+          <h3>Construction</h3>
+          <p>Experienced site teams execute the works with precision, with regular progress reporting and milestone inspections throughout the build.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-4">
+          <div class="step-num">04</div>
+          <h3>Handover</h3>
+          <p>Final inspections, quality certification, and complete project handover to Indian Railways or the relevant government authority with full documentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="section-label reveal">Get In Touch</div>
+        <h2 class="section-title reveal reveal-delay-1">Partner with us<br>on your next project.</h2>
+        <p class="section-sub reveal reveal-delay-2">Reach out to discuss your government infrastructure or railway construction requirements. Our team in Navi Mumbai is ready to assist.</p>
+        <div class="contact-items">
+          <div class="contact-item reveal reveal-delay-2">
+            <div class="contact-icon">&#128205;</div>
+            <div>
+              <h4>Head Office</h4>
+              <p>1313-1314, Real Tech Park, Sector-30A,<br>Vashi, Navi Mumbai &ndash; 400703</p>
+            </div>
+          </div>
+          <div class="contact-item reveal reveal-delay-3">
+            <div class="contact-icon">&#128222;</div>
+            <div>
+              <h4>Phone</h4>
+              <p>+91 98676 06692 / +91 98922 43804</p>
+            </div>
+          </div>
+          <div class="contact-item reveal reveal-delay-4">
+            <div class="contact-icon">&#9993;</div>
+            <div>
+              <h4>Email</h4>
+              <p>infra@kdconstructions.net<br>kdconstruction2004@gmail.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="James" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Anderson" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="james@company.com" />
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 XXXXX XXXXX" />
+        </div>
+        <div class="form-group">
+          <label>Project Type</label>
+          <select>
+            <option value="" disabled selected>Select a service</option>
+            <option>Railway Station Construction</option>
+            <option>Railway Carshed Construction</option>
+            <option>Government Infrastructure Development</option>
+            <option>Railway Infrastructure Projects</option>
+            <option>Civil &amp; Structural Works</option>
+            <option>Project Management</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Project Details</label>
+          <textarea placeholder="Tell us about your project &mdash; scope, timeline, budget range..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Enquiry &#8594;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section id="map" style="padding: 120px 60px; background: var(--bg); border-top: 1px solid var(--border);">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="reveal" style="margin-bottom: 48px;">
+        <div class="section-label">Our Location</div>
+        <h2 class="section-title">Find Us</h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem; margin-top: 8px;">
+          1313-1314, Real Tech Park, Sector-30A, Vashi, Navi Mumbai &ndash; 400703
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1" style="display: flex; justify-content: center;">
+        <div style="
+          width: 600px; max-width: 100%;
+          border-radius: var(--radius);
+          overflow: hidden;
+          border: 1px solid var(--border);
+          box-shadow: 0 0 0 1px rgba(212,168,83,0.12), 0 32px 80px rgba(0,0,0,0.5);
+          position: relative;
+        ">
+          <div style="
+            position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            border-radius: var(--radius);
+            box-shadow: inset 0 0 0 1px rgba(212,168,83,0.15);
+          "></div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d17938.035173541673!2d72.99264093011936!3d19.06341364087394!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c146687fb09d%3A0x2e9898bddf668c14!2sK.D.%20Constructions!5e0!3m2!1sen!2sin!4v1774550885901!5m2!1sen!2sin"
+            width="600" height="350" style="border:0; display:block; filter: grayscale(20%) contrast(1.05);"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2" style="
+        display: flex; gap: 40px; flex-wrap: wrap;
+        margin-top: 32px; padding-top: 32px;
+        border-top: 1px solid var(--border);
+      ">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="
+            width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+            background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+          ">&#128205;</div>
+          <div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px;">Address</p>
+            <p style="font-size: 0.92rem; font-weight: 500;">1313-1314, Real Tech Park, Sector-30A, Vashi, Navi Mumbai &ndash; 400703</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="
+            width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+            background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+          ">&#128222;</div>
+          <div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px;">Phone</p>
+            <p style="font-size: 0.92rem; font-weight: 500;">+91 98676 06692 &nbsp;/&nbsp; +91 98922 43804</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="
+            width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+            background: var(--accent-dim); border: 1px solid rgba(212,168,83,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+          ">&#9993;</div>
+          <div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px;">Email</p>
+            <p style="font-size: 0.92rem; font-weight: 500;">infra@kdconstructions.net</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="nav-logo"><img src="image.png" alt="KD Constructions" /></a>
+          <p>Trusted name in government infrastructure development. Building Maharashtra's railway future since 2004. MSME registered &amp; GST compliant.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h5>Services</h5>
+            <ul>
+              <li><a href="#services">Railway Stations</a></li>
+              <li><a href="#services">Railway Carsheds</a></li>
+              <li><a href="#services">Govt. Infrastructure</a></li>
+              <li><a href="#services">Rail Projects</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Company</h5>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#process">Our Process</a></li>
+              <li><a href="#contact">Careers</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Legal</h5>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Licenses</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Kailashchandra Dilipkumar Constructions Pvt. Ltd. All rights reserved.</p>
+        <p>GST: 27AACCK5158J1ZA &nbsp;|&nbsp; PAN: AACCK5158J &nbsp;|&nbsp; MSME: UDYAM-MH-33-0024958</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll reveal via IntersectionObserver
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // Fallback: if any reveals are still hidden after 1.5s, force them visible
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        el.classList.add('visible');
+      });
+    }, 1500);
+
+    // Smooth anchor scroll with offset for fixed nav
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
