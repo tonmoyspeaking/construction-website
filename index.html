@@ -8,6 +8,7 @@
       name="description"
       content="KD Constructions — Government infrastructure partner since 2004. 500+ personnel, ₹260 Crores delivered. Trusted by Indian Railways, CIDCO, MRVC."
     />
+    <link rel="icon" href="image.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -1189,6 +1190,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#ongoing">Ongoing</a></li>
         <li><a href="#clients">Clients</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -1203,6 +1205,7 @@
       <a href="#about" class="mobile-link">About</a>
       <a href="#capabilities" class="mobile-link">Capabilities</a>
       <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#ongoing" class="mobile-link">Ongoing</a>
       <a href="#clients" class="mobile-link">Clients</a>
       <a href="#contact" class="mobile-link">Contact</a>
     </div>
@@ -1521,7 +1524,7 @@
         <div class="ongoing-card anim">
           <div class="ongoing-img">
             <img
-              src="shiv.png"
+              src="panvel.png"
               alt="Panvel-Karjat Railway Line Development"
               loading="lazy"
             />
@@ -1538,7 +1541,7 @@
         <div class="ongoing-card anim">
           <div class="ongoing-img">
             <img
-              src="nhave.png"
+              src="harbour.png"
               alt="AIIB-Funded Mumbai Suburban Stations"
               loading="lazy"
             />
@@ -1780,7 +1783,7 @@
       </div>
       <div class="footer-bottom">
         <p>
-          © 2024 Kailashchandra Dilipkumar Constructions Pvt. Ltd. All rights
+          © <span id="copy-year">2025</span> Kailashchandra Dilipkumar Constructions Pvt. Ltd. All rights
           reserved.
         </p>
         <p>Proud infrastructure partner of <span>Indian Railways</span></p>
@@ -1789,6 +1792,10 @@
 
     <!-- JavaScript -->
     <script>
+      // Dynamic copyright year
+      const yearEl = document.getElementById("copy-year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
       // Navbar scroll
       const navbar = document.getElementById("navbar");
       window.addEventListener("scroll", () => {
@@ -1839,9 +1846,7 @@
                   const target = parseInt(el.dataset.target);
                   const duration = 2000;
                   const start = performance.now();
-                  const suffix = el.dataset.target === "260" ? "" : "+";
-                  const prefix = el.dataset.target === "260" ? "₹" : "";
-                  const suffixAfter = el.dataset.target === "260" ? "Cr+" : "+";
+                  const isCrores = el.dataset.target === "260";
 
                   function update(now) {
                     const elapsed = now - start;
@@ -1849,11 +1854,7 @@
                     const eased = 1 - Math.pow(1 - progress, 3);
                     const current = Math.floor(eased * target);
 
-                    if (el.dataset.target === "260") {
-                      el.textContent = "₹" + current + "Cr+";
-                    } else {
-                      el.textContent = current + "+";
-                    }
+                    el.textContent = isCrores ? "₹" + current + "Cr+" : current + "+";
 
                     if (progress < 1) requestAnimationFrame(update);
                   }
