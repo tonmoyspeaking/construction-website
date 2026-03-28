@@ -6,13 +6,13 @@
     <title>KD Constructions — Building India's Railway Infrastructure</title>
     <meta
       name="description"
-      content="KD Constructions — Government infrastructure partner since 2004. 500+ personnel, ₹260 Crores delivered. Trusted by Indian Railways, CIDCO, MRVC."
+      content="KD Constructions — Government infrastructure partner since 2004. 500+ personnel, 20+ years. Trusted by Indian Railways, CIDCO, MRVC."
     />
     <link rel="icon" href="image.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -25,21 +25,24 @@
       }
 
       :root {
-        --black: #0f1419;
-        --black2: #151c24;
-        --black3: #1a2332;
-        --black4: #1f2a3a;
+        --bg: #080c10;
+        --bg-elevated: rgba(255, 255, 255, 0.03);
+        --bg-elevated-2: rgba(255, 255, 255, 0.05);
         --gold: #c9a84c;
         --gold-light: #dfc06e;
         --gold-dark: #a88a30;
-        --gold-dim: rgba(201, 168, 76, 0.12);
-        --gold-border: rgba(201, 168, 76, 0.25);
-        --white: #ffffff;
-        --gray: #a1a1a6;
-        --gray-dim: #6e6e73;
-        --border: rgba(255, 255, 255, 0.08);
-        --radius: 20px;
-        --radius-sm: 14px;
+        --gold-dim: rgba(201, 168, 76, 0.08);
+        --gold-border: rgba(201, 168, 76, 0.15);
+        --gold-border-hover: rgba(201, 168, 76, 0.35);
+        --text-primary: rgba(255, 255, 255, 0.9);
+        --text-secondary: rgba(255, 255, 255, 0.6);
+        --text-tertiary: rgba(255, 255, 255, 0.35);
+        --border: rgba(255, 255, 255, 0.06);
+        --border-hover: rgba(255, 255, 255, 0.12);
+        --radius: 16px;
+        --radius-sm: 12px;
+        --blur: blur(20px);
+        --blur-heavy: blur(40px);
       }
 
       html {
@@ -47,37 +50,136 @@
       }
 
       body {
-        background: var(--black);
-        color: var(--white);
+        background: var(--bg);
+        color: var(--text-primary);
         font-family:
           "Inter",
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
+        font-weight: 300;
         line-height: 1.6;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       ::-webkit-scrollbar {
-        width: 5px;
+        width: 4px;
       }
       ::-webkit-scrollbar-track {
-        background: var(--black);
+        background: var(--bg);
       }
       ::-webkit-scrollbar-thumb {
-        background: #2a3545;
-        border-radius: 3px;
+        background: rgba(201, 168, 76, 0.2);
+        border-radius: 2px;
       }
 
       h1,
       h2,
       h3,
-      .playfair {
+      h4 {
         font-family: "Playfair Display", Georgia, serif;
+        font-weight: 600;
       }
 
-      .gold-divider {
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ── GLASS UTILITY ── */
+      .glass {
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--border);
+      }
+      .glass-gold {
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--gold-border);
+      }
+
+      /* ── REVEAL ANIMATIONS ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+
+      /* ── SECTION COMMONS ── */
+      .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      section {
+        padding: 120px 60px;
+        position: relative;
+      }
+      .section-label {
+        font-family: "Inter", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 16px;
+      }
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 600;
+        letter-spacing: -1px;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .section-sub {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        max-width: 520px;
+        line-height: 1.8;
+        font-weight: 300;
+      }
+      .section-center {
+        text-align: center;
+      }
+      .section-center .section-sub {
+        margin: 0 auto;
+      }
+
+      .gold-line {
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
@@ -100,70 +202,72 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 60px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 24px 60px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       }
       nav.scrolled {
-        background: rgba(15, 20, 25, 0.88);
-        backdrop-filter: blur(30px);
-        -webkit-backdrop-filter: blur(30px);
-        padding: 14px 60px;
+        background: rgba(8, 12, 16, 0.85);
+        backdrop-filter: var(--blur-heavy);
+        -webkit-backdrop-filter: var(--blur-heavy);
+        padding: 16px 60px;
         border-bottom: 1px solid var(--border);
       }
       .nav-logo img {
-        height: 60px;
+        height: 80px;
         transition: height 0.4s;
-        display: block;
       }
       nav.scrolled .nav-logo img {
-        height: 44px;
+        height: 52px;
       }
+
       .nav-links {
         display: flex;
         gap: 36px;
         list-style: none;
       }
       .nav-links a {
-        color: var(--gray);
-        text-decoration: none;
-        font-size: 0.88rem;
-        font-weight: 500;
-        letter-spacing: 0.3px;
-        transition: color 0.25s;
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        transition: color 0.3s;
         position: relative;
+        padding-bottom: 4px;
       }
       .nav-links a::after {
         content: "";
         position: absolute;
-        bottom: -4px;
+        bottom: 0;
         left: 0;
         right: 0;
         height: 1px;
         background: var(--gold);
         transform: scaleX(0);
-        transition: transform 0.3s;
+        transform-origin: center;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .nav-links a:hover {
-        color: var(--white);
+        color: var(--text-primary);
       }
       .nav-links a:hover::after {
         transform: scaleX(1);
       }
+
       .nav-cta {
-        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-        color: #000;
-        padding: 12px 28px;
+        color: var(--gold);
+        padding: 10px 24px;
         border-radius: 980px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-decoration: none;
-        letter-spacing: 0.3px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        border: 1px solid var(--gold-border);
         transition: all 0.3s;
-        box-shadow: 0 4px 20px rgba(201, 168, 76, 0.3);
+        cursor: pointer;
       }
       .nav-cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(201, 168, 76, 0.45);
+        background: rgba(201, 168, 76, 0.08);
+        border-color: var(--gold);
+        transform: translateY(-1px);
       }
 
       /* Hamburger */
@@ -179,9 +283,9 @@
       }
       .hamburger span {
         display: block;
-        width: 24px;
-        height: 2px;
-        background: var(--white);
+        width: 22px;
+        height: 1.5px;
+        background: var(--text-primary);
         transition: all 0.3s;
         border-radius: 2px;
       }
@@ -199,21 +303,23 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(15, 20, 25, 0.97);
+        background: rgba(8, 12, 16, 0.97);
+        backdrop-filter: var(--blur-heavy);
+        -webkit-backdrop-filter: var(--blur-heavy);
         z-index: 999;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 32px;
+        gap: 36px;
       }
       .mobile-menu.active {
         display: flex;
       }
       .mobile-menu a {
-        color: var(--white);
-        text-decoration: none;
-        font-size: 1.4rem;
-        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        font-family: "Playfair Display", serif;
+        font-weight: 500;
         letter-spacing: -0.5px;
         transition: color 0.2s;
       }
@@ -229,7 +335,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 160px 40px 80px;
+        padding: 160px 40px 100px;
         position: relative;
         overflow: hidden;
       }
@@ -237,22 +343,46 @@
         position: absolute;
         inset: 0;
         z-index: 0;
+        background: url("shiv.png") center/cover no-repeat;
+        opacity: 0.08;
+      }
+      .hero-bg-rail {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: url("rail.png") center/cover no-repeat;
+        opacity: 0.25;
+      }
+      .hero-gradient {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
         background:
           radial-gradient(
             ellipse at 50% 0%,
             rgba(201, 168, 76, 0.06) 0%,
-            transparent 60%
+            transparent 50%
           ),
           radial-gradient(
-            ellipse at 80% 80%,
-            rgba(201, 168, 76, 0.04) 0%,
-            transparent 50%
-          );
+            ellipse at 80% 100%,
+            rgba(201, 168, 76, 0.03) 0%,
+            transparent 40%
+          ),
+          linear-gradient(180deg, rgba(8, 12, 16, 0.4) 0%, var(--bg) 100%);
+        animation: heroShimmer 12s ease-in-out infinite alternate;
+      }
+      @keyframes heroShimmer {
+        0% {
+          opacity: 0.85;
+        }
+        100% {
+          opacity: 1;
+        }
       }
       .hero-content {
         position: relative;
-        z-index: 1;
-        max-width: 900px;
+        z-index: 2;
+        max-width: 860px;
       }
       .hero-badge {
         display: inline-flex;
@@ -263,49 +393,52 @@
         color: var(--gold);
         border-radius: 980px;
         padding: 10px 24px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 2px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 2.5px;
         text-transform: uppercase;
-        margin-bottom: 40px;
+        margin-bottom: 44px;
         font-family: "Inter", sans-serif;
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
       }
       .hero-badge::before {
         content: "";
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         background: var(--gold);
         border-radius: 50%;
-        animation: pulse 2s infinite;
+        animation: pulse 2.5s infinite;
+        flex-shrink: 0;
       }
       @keyframes pulse {
         0%,
         100% {
-          box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.6);
+          box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.5);
         }
         50% {
           box-shadow: 0 0 0 8px rgba(201, 168, 76, 0);
         }
       }
       .hero-title {
-        font-size: clamp(3rem, 8vw, 6rem);
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
         font-weight: 700;
         letter-spacing: -2px;
-        line-height: 1.08;
+        line-height: 1.05;
         margin-bottom: 28px;
-        color: var(--white);
+        color: var(--text-primary);
       }
       .hero-title em {
-        font-style: normal;
+        font-style: italic;
         color: var(--gold);
       }
       .hero-sub {
-        font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-        color: var(--gray);
-        max-width: 640px;
-        margin: 0 auto 44px;
-        line-height: 1.8;
-        font-family: "Inter", sans-serif;
+        font-size: clamp(0.95rem, 1.6vw, 1.08rem);
+        color: var(--text-secondary);
+        max-width: 540px;
+        margin: 0 auto 48px;
+        line-height: 1.85;
+        font-weight: 300;
       }
       .hero-actions {
         display: flex;
@@ -315,205 +448,174 @@
       }
       .btn-gold {
         background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-        color: #000;
-        padding: 16px 40px;
+        color: #080c10;
+        padding: 14px 38px;
         border-radius: 980px;
-        font-size: 0.95rem;
-        font-weight: 700;
-        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
         transition: all 0.3s;
-        box-shadow: 0 6px 30px rgba(201, 168, 76, 0.35);
+        box-shadow: 0 4px 24px rgba(201, 168, 76, 0.3);
         font-family: "Inter", sans-serif;
+        cursor: pointer;
+        border: none;
       }
       .btn-gold:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 40px rgba(201, 168, 76, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 36px rgba(201, 168, 76, 0.45);
       }
       .btn-outline {
         background: transparent;
-        color: var(--white);
-        padding: 16px 40px;
+        color: var(--text-primary);
+        padding: 14px 38px;
         border-radius: 980px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        font-size: 0.95rem;
-        font-weight: 600;
-        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 0.88rem;
+        font-weight: 400;
         transition: all 0.3s;
         font-family: "Inter", sans-serif;
+        cursor: pointer;
       }
       .btn-outline:hover {
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.04);
         border-color: rgba(255, 255, 255, 0.25);
-        transform: translateY(-3px);
+        transform: translateY(-2px);
       }
 
       /* Stats Bar */
       .stats-bar {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 2px;
-        max-width: 900px;
+        max-width: 880px;
         width: 100%;
-        margin: 60px auto 0;
-        background: var(--border);
+        margin: 72px auto 0;
+        position: relative;
+        z-index: 2;
         border-radius: var(--radius);
         overflow: hidden;
-        position: relative;
-        z-index: 1;
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--border);
       }
       .stat-item {
-        background: var(--black2);
-        padding: 36px 20px;
+        padding: 32px 16px;
         text-align: center;
-        backdrop-filter: blur(10px);
+        position: relative;
+      }
+      .stat-item:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 25%;
+        bottom: 25%;
+        width: 1px;
+        background: var(--border);
       }
       .stat-num {
         font-family: "Playfair Display", serif;
-        font-size: 2.4rem;
+        font-size: 2rem;
         font-weight: 700;
         color: var(--gold);
         letter-spacing: -1px;
         line-height: 1;
       }
       .stat-label {
-        font-size: 0.78rem;
-        color: var(--gray);
+        font-size: 0.72rem;
+        color: var(--text-tertiary);
         margin-top: 8px;
         letter-spacing: 0.5px;
-        font-weight: 500;
+        font-weight: 400;
       }
-
-      /* ── SECTION COMMONS ── */
-      section {
-        padding: 120px 60px;
-      }
-      .section-label {
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 2.5px;
-        text-transform: uppercase;
+      .stat-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        font-weight: 600;
         color: var(--gold);
-        margin-bottom: 16px;
-        font-family: "Inter", sans-serif;
-      }
-      .section-title {
-        font-size: clamp(2rem, 4vw, 3.2rem);
-        font-weight: 700;
-        letter-spacing: -1.5px;
-        line-height: 1.15;
-        margin-bottom: 16px;
-      }
-      .section-sub {
-        color: var(--gray);
-        font-size: 1.05rem;
-        max-width: 560px;
-        line-height: 1.8;
-        font-family: "Inter", sans-serif;
-      }
-      .section-center {
-        text-align: center;
-      }
-      .section-center .section-sub {
-        margin: 0 auto;
-      }
-
-      /* Animate on scroll */
-      .anim {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .anim.visible {
-        opacity: 1;
-        transform: translateY(0);
+        line-height: 1.2;
       }
 
       /* ── CLIENTS ── */
       #clients {
         padding: 80px 60px;
-        background: var(--black2);
-      }
-      .clients-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        text-align: center;
       }
       .clients-row {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 16px;
+        gap: 12px;
         margin-top: 48px;
       }
       .client-badge {
-        padding: 16px 32px;
+        padding: 14px 28px;
         border: 1px solid var(--gold-border);
         border-radius: var(--radius-sm);
-        font-size: 0.88rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 2px;
         color: var(--gold);
         text-transform: uppercase;
         background: var(--gold-dim);
-        transition: all 0.3s;
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        transition: all 0.35s;
+        cursor: default;
       }
       .client-badge:hover {
-        background: rgba(201, 168, 76, 0.2);
-        border-color: var(--gold);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 30px rgba(201, 168, 76, 0.15);
+        background: rgba(201, 168, 76, 0.12);
+        border-color: var(--gold-border-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(201, 168, 76, 0.08);
       }
 
       /* ── ABOUT ── */
-      #about {
-        background: var(--black);
-      }
       .about-grid {
-        max-width: 1200px;
-        margin: 0 auto;
         display: grid;
         grid-template-columns: 1.2fr 1fr;
-        gap: 80px;
+        gap: 72px;
         align-items: start;
       }
       .about-text p {
-        font-size: 1.2rem;
-        color: var(--gray);
+        font-size: 1.05rem;
+        color: var(--text-secondary);
         line-height: 1.9;
-        margin-bottom: 40px;
-        font-family: "Inter", sans-serif;
+        margin-bottom: 36px;
+        font-weight: 300;
       }
       .about-checks {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
       }
       .about-check {
         display: flex;
         align-items: flex-start;
-        gap: 14px;
-        font-size: 0.95rem;
-        color: var(--gray);
+        gap: 12px;
+        font-size: 0.92rem;
+        color: var(--text-secondary);
         line-height: 1.6;
+        font-weight: 300;
       }
-      .about-check .check {
+      .check-icon {
         color: var(--gold);
-        font-size: 1.1rem;
         flex-shrink: 0;
-        margin-top: 2px;
+        margin-top: 3px;
+        width: 16px;
+        height: 16px;
       }
       .vision-mission {
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 20px;
       }
       .vm-card {
-        padding: 40px;
-        background: var(--black2);
-        border: 1px solid var(--gold-border);
+        padding: 36px;
         border-radius: var(--radius);
         position: relative;
         overflow: hidden;
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--gold-border);
       }
       .vm-card::before {
         content: "";
@@ -521,42 +623,42 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--gold), var(--gold-light));
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), transparent);
       }
       .vm-card h3 {
-        font-size: 1.5rem;
-        font-weight: 700;
+        font-size: 1.3rem;
+        font-weight: 600;
         color: var(--gold);
-        margin-bottom: 16px;
-        letter-spacing: -0.5px;
+        margin-bottom: 12px;
+        letter-spacing: -0.3px;
       }
       .vm-card p {
-        font-size: 0.95rem;
-        color: var(--gray);
+        font-size: 0.92rem;
+        color: var(--text-secondary);
         line-height: 1.8;
-        font-family: "Inter", sans-serif;
+        font-weight: 300;
       }
 
       /* ── CAPABILITIES ── */
-      #capabilities {
-        background: var(--black2);
-      }
       .cap-grid {
         max-width: 1200px;
-        margin: 60px auto 0;
+        margin: 56px auto 0;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
       }
       .cap-card {
-        background: var(--black3);
-        border: 1px solid var(--border);
         border-radius: var(--radius);
-        padding: 40px 32px;
+        padding: 28px 20px;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        cursor: default;
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--border);
       }
       .cap-card::before {
         content: "";
@@ -564,197 +666,196 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--gold), var(--gold-light));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s;
+        height: 2px;
+        background: var(--gold);
+        opacity: 0.4;
       }
       .cap-card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-4px);
         border-color: var(--gold-border);
-        box-shadow: 0 20px 60px rgba(201, 168, 76, 0.1);
+        box-shadow: 0 16px 48px rgba(201, 168, 76, 0.06);
       }
-      .cap-card:hover::before {
-        transform: scaleX(1);
+      .cap-icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 16px;
+        color: var(--gold);
+        opacity: 0.8;
       }
       .cap-card h3 {
-        font-size: 1.15rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        letter-spacing: -0.3px;
-        font-family: "Playfair Display", serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+        letter-spacing: -0.2px;
+        line-height: 1.3;
+        color: var(--text-primary);
       }
       .cap-list {
         list-style: none;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 7px;
       }
       .cap-list li {
-        font-size: 0.88rem;
-        color: var(--gray);
-        padding-left: 18px;
+        font-size: 0.78rem;
+        color: var(--text-secondary);
+        padding-left: 14px;
         position: relative;
-        line-height: 1.5;
+        line-height: 1.45;
+        font-weight: 300;
       }
       .cap-list li::before {
         content: "";
         position: absolute;
         left: 0;
-        top: 10px;
-        width: 6px;
-        height: 2px;
+        top: 8px;
+        width: 4px;
+        height: 1px;
         background: var(--gold);
+        opacity: 0.6;
       }
 
-      /* ── PROJECTS ── */
-      #projects {
-        background: var(--black);
-      }
+      /* ── COMPLETED PROJECTS ── */
       .projects-grid {
         max-width: 1200px;
-        margin: 60px auto 0;
+        margin: 56px auto 0;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        gap: 20px;
       }
       .proj-card {
-        background: var(--black2);
-        border: 1px solid var(--border);
         border-radius: var(--radius);
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        height: 380px;
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border);
       }
       .proj-card:hover {
         border-color: var(--gold-border);
-        box-shadow: 0 20px 60px rgba(201, 168, 76, 0.12);
-        transform: translateY(-6px) scale(1.01);
+        transform: translateY(-4px);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
       }
-      .proj-img {
-        position: relative;
-        width: 100%;
-        height: 280px;
-        overflow: hidden;
-      }
-      .proj-img img {
+      .proj-card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
-        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .proj-card:hover .proj-img img {
-        transform: scale(1.06);
+      .proj-card:hover img {
+        transform: scale(1.05);
       }
-      .proj-img::after {
-        content: "";
+      .proj-overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(
           to top,
-          rgba(0, 0, 0, 0.7) 0%,
-          transparent 60%
+          rgba(8, 12, 16, 0.95) 0%,
+          rgba(8, 12, 16, 0.5) 40%,
+          rgba(8, 12, 16, 0.15) 100%
         );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 32px;
       }
       .proj-tag {
         position: absolute;
         top: 20px;
         left: 20px;
-        z-index: 1;
-        background: var(--gold);
-        color: #000;
-        padding: 6px 16px;
+        background: rgba(201, 168, 76, 0.15);
+        border: 1px solid var(--gold-border);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        color: var(--gold);
+        padding: 6px 14px;
         border-radius: 980px;
-        font-size: 0.68rem;
-        font-weight: 800;
-        letter-spacing: 1px;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 1.2px;
         text-transform: uppercase;
         font-family: "Inter", sans-serif;
       }
-      .proj-body {
-        padding: 32px;
-      }
-      .proj-body h3 {
-        font-size: 1.4rem;
-        font-weight: 700;
-        margin-bottom: 12px;
+      .proj-overlay h3 {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-bottom: 8px;
         letter-spacing: -0.5px;
+        color: var(--text-primary);
       }
-      .proj-body p {
-        font-size: 0.92rem;
-        color: var(--gray);
-        line-height: 1.7;
-        font-family: "Inter", sans-serif;
+      .proj-overlay p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-weight: 300;
+        max-width: 400px;
       }
 
-      /* ── ONGOING ── */
-      #ongoing {
-        background: var(--black2);
-      }
+      /* ── ONGOING PROJECTS ── */
       .ongoing-grid {
         max-width: 1200px;
-        margin: 60px auto 0;
+        margin: 56px auto 0;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        gap: 20px;
       }
       .ongoing-card {
-        background: var(--black3);
-        border: 1px solid var(--border);
         border-radius: var(--radius);
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        height: 400px;
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border);
       }
       .ongoing-card:hover {
         border-color: var(--gold-border);
-        box-shadow: 0 20px 60px rgba(201, 168, 76, 0.1);
-        transform: translateY(-6px);
+        transform: translateY(-4px);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
       }
-      .ongoing-img {
-        position: relative;
-        width: 100%;
-        height: 240px;
-        overflow: hidden;
-      }
-      .ongoing-img img {
+      .ongoing-card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
-        transition: transform 0.6s;
+        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .ongoing-card:hover .ongoing-img img {
-        transform: scale(1.06);
+      .ongoing-card:hover img {
+        transform: scale(1.05);
       }
-      .ongoing-img::after {
-        content: "";
+      .ongoing-overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(
           to top,
-          rgba(0, 0, 0, 0.7) 0%,
-          transparent 60%
+          rgba(8, 12, 16, 0.95) 0%,
+          rgba(8, 12, 16, 0.5) 40%,
+          rgba(8, 12, 16, 0.15) 100%
         );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 32px;
       }
       .ongoing-active {
         position: absolute;
         top: 20px;
         left: 20px;
-        z-index: 1;
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: var(--gold-dim);
-        border: 1px solid var(--gold-border);
+        background: rgba(201, 168, 76, 0.12);
+        border: 1px solid var(--gold);
         color: var(--gold);
         border-radius: 980px;
         padding: 6px 16px;
-        font-size: 0.68rem;
-        font-weight: 800;
-        letter-spacing: 1px;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
         font-family: "Inter", sans-serif;
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
       }
       .ongoing-active::before {
         content: "";
@@ -763,120 +864,122 @@
         background: var(--gold);
         border-radius: 50%;
         animation: pulse 2s infinite;
+        flex-shrink: 0;
       }
-      .ongoing-body {
-        padding: 32px;
-      }
-      .ongoing-body h3 {
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 12px;
+      .ongoing-overlay h3 {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-bottom: 8px;
         letter-spacing: -0.5px;
       }
-      .ongoing-body p {
-        font-size: 0.92rem;
-        color: var(--gray);
-        line-height: 1.7;
-        font-family: "Inter", sans-serif;
+      .ongoing-overlay p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-weight: 300;
+        max-width: 400px;
       }
 
       /* ── VALUES ── */
-      #values {
-        background: var(--black);
-      }
       .values-grid {
         max-width: 1200px;
-        margin: 60px auto 0;
+        margin: 56px auto 0;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 20px;
+        gap: 14px;
       }
       .value-card {
-        background: var(--black2);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 36px 24px;
+        border-radius: var(--radius);
+        padding: 32px 20px;
         text-align: center;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--border);
       }
       .value-card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-3px);
         border-color: var(--gold-border);
-        box-shadow: 0 16px 50px rgba(201, 168, 76, 0.1);
+        box-shadow: 0 12px 40px rgba(201, 168, 76, 0.05);
       }
       .value-icon {
-        font-size: 2rem;
-        margin-bottom: 16px;
+        width: 28px;
+        height: 28px;
+        margin: 0 auto 14px;
         color: var(--gold);
+        opacity: 0.8;
       }
       .value-card h3 {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-        letter-spacing: -0.3px;
-        font-family: "Playfair Display", serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        letter-spacing: -0.2px;
+        color: var(--text-primary);
       }
       .value-card p {
-        font-size: 0.82rem;
-        color: var(--gray);
+        font-size: 0.78rem;
+        color: var(--text-secondary);
         line-height: 1.5;
-        font-family: "Inter", sans-serif;
+        font-weight: 300;
       }
 
       /* ── MACHINERY ── */
-      #machinery {
-        background: var(--black2);
-      }
       .machinery-grid {
         max-width: 1200px;
-        margin: 60px auto 0;
+        margin: 56px auto 0;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: 14px;
       }
       .mach-card {
-        background: var(--black3);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 36px 28px;
+        border-radius: var(--radius);
+        padding: 32px 24px;
         text-align: center;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--border);
       }
       .mach-card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-3px);
         border-color: var(--gold-border);
-        box-shadow: 0 16px 50px rgba(201, 168, 76, 0.1);
+        box-shadow: 0 12px 40px rgba(201, 168, 76, 0.05);
       }
       .mach-icon {
-        font-size: 2rem;
-        margin-bottom: 16px;
+        width: 32px;
+        height: 32px;
+        margin: 0 auto 14px;
+        color: var(--gold);
+        opacity: 0.8;
       }
       .mach-card h3 {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 16px;
-        letter-spacing: -0.3px;
-        font-family: "Playfair Display", serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+        letter-spacing: -0.2px;
+        color: var(--text-primary);
       }
       .mach-list {
         list-style: none;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 7px;
       }
       .mach-list li {
-        font-size: 0.85rem;
-        color: var(--gray);
+        font-size: 0.8rem;
+        color: var(--text-secondary);
         line-height: 1.5;
+        font-weight: 300;
       }
 
       /* ── CONTACT ── */
-      #contact {
-        background: var(--black);
-      }
       .contact-grid {
         max-width: 1200px;
-        margin: 60px auto 0;
+        margin: 56px auto 0;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 60px;
@@ -885,25 +988,25 @@
       .contact-details {
         display: flex;
         flex-direction: column;
-        gap: 28px;
+        gap: 22px;
       }
       .contact-item {
         display: flex;
         align-items: flex-start;
-        gap: 16px;
-        font-size: 0.95rem;
-        color: var(--gray);
+        gap: 14px;
+        font-size: 0.92rem;
+        color: var(--text-secondary);
         line-height: 1.7;
+        font-weight: 300;
       }
-      .contact-item .ci-icon {
+      .ci-icon {
         color: var(--gold);
-        font-size: 1.2rem;
         flex-shrink: 0;
-        margin-top: 2px;
+        margin-top: 3px;
+        opacity: 0.8;
       }
       .contact-item a {
-        color: var(--white);
-        text-decoration: none;
+        color: var(--text-primary);
         transition: color 0.2s;
       }
       .contact-item a:hover {
@@ -913,71 +1016,85 @@
       .contact-form {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
+        padding: 36px;
+        border-radius: var(--radius);
+        background: var(--bg-elevated);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid var(--border);
       }
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 14px;
+      }
+      .form-label {
+        display: block;
+        font-size: 0.72rem;
+        color: var(--text-tertiary);
+        margin-bottom: 6px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
       }
       .contact-form input,
       .contact-form select,
       .contact-form textarea {
         width: 100%;
-        padding: 14px 18px;
-        background: var(--black2);
+        padding: 13px 16px;
+        background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border);
         border-radius: var(--radius-sm);
-        color: var(--white);
-        font-size: 0.9rem;
+        color: var(--text-primary);
+        font-size: 0.88rem;
         font-family: "Inter", sans-serif;
+        font-weight: 300;
         transition: border-color 0.3s;
         outline: none;
       }
       .contact-form input::placeholder,
       .contact-form textarea::placeholder {
-        color: var(--gray-dim);
+        color: var(--text-tertiary);
       }
       .contact-form input:focus,
       .contact-form select:focus,
       .contact-form textarea:focus {
-        border-color: var(--gold-border);
+        border-color: rgba(201, 168, 76, 0.4);
       }
       .contact-form select {
         appearance: none;
         cursor: pointer;
-        color: var(--gray-dim);
+        color: var(--text-tertiary);
       }
       .contact-form select option {
-        background: var(--black2);
-        color: var(--white);
+        background: var(--bg);
+        color: var(--text-primary);
       }
       .contact-form textarea {
         resize: vertical;
-        min-height: 120px;
+        min-height: 100px;
       }
       .btn-submit {
         background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-        color: #000;
-        padding: 16px 40px;
+        color: #080c10;
+        padding: 14px 36px;
         border-radius: 980px;
-        font-size: 0.95rem;
-        font-weight: 700;
+        font-size: 0.88rem;
+        font-weight: 600;
         border: none;
         cursor: pointer;
         transition: all 0.3s;
         font-family: "Inter", sans-serif;
-        box-shadow: 0 6px 30px rgba(201, 168, 76, 0.35);
+        box-shadow: 0 4px 24px rgba(201, 168, 76, 0.3);
+        align-self: flex-start;
       }
       .btn-submit:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 40px rgba(201, 168, 76, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 36px rgba(201, 168, 76, 0.45);
       }
 
       /* ── MAP ── */
       #map {
-        background: var(--black2);
-        padding: 80px 60px;
         text-align: center;
       }
       .map-wrap {
@@ -985,19 +1102,19 @@
         margin: 40px auto 0;
         border-radius: var(--radius);
         overflow: hidden;
-        border: 1px solid var(--border);
+        border: 1px solid var(--gold-border);
       }
       .map-wrap iframe {
         width: 100%;
         height: 400px;
         display: block;
+        filter: grayscale(0.3) brightness(0.8);
       }
 
       /* ── FOOTER ── */
       footer {
-        background: var(--black);
         border-top: 1px solid var(--border);
-        padding: 60px 60px 40px;
+        padding: 56px 60px 40px;
       }
       .footer-inner {
         max-width: 1200px;
@@ -1007,8 +1124,7 @@
         align-items: center;
       }
       .footer-logo img {
-        height: 40px;
-        display: block;
+        height: 36px;
       }
       .footer-links {
         display: flex;
@@ -1016,10 +1132,9 @@
         list-style: none;
       }
       .footer-links a {
-        color: var(--gray);
-        text-decoration: none;
-        font-size: 0.88rem;
-        font-weight: 500;
+        color: var(--text-tertiary);
+        font-size: 0.82rem;
+        font-weight: 400;
         transition: color 0.2s;
       }
       .footer-links a:hover {
@@ -1027,21 +1142,27 @@
       }
       .footer-bottom {
         max-width: 1200px;
-        margin: 40px auto 0;
-        padding-top: 40px;
+        margin: 36px auto 0;
+        padding-top: 36px;
         border-top: 1px solid var(--border);
         text-align: center;
       }
       .footer-bottom p {
-        font-size: 0.82rem;
-        color: var(--gray-dim);
+        font-size: 0.78rem;
+        color: var(--text-tertiary);
         line-height: 1.8;
+        font-weight: 300;
       }
-      .footer-bottom p span {
+      .footer-bottom .gold {
         color: var(--gold);
       }
 
       /* ── RESPONSIVE ── */
+      @media (max-width: 1200px) {
+        .cap-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
       @media (max-width: 1024px) {
         nav {
           padding: 16px 32px;
@@ -1057,13 +1178,7 @@
           gap: 48px;
         }
         .cap-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .projects-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        .ongoing-grid {
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(3, 1fr);
         }
         .values-grid {
           grid-template-columns: repeat(3, 1fr);
@@ -1077,6 +1192,9 @@
         }
         .stats-bar {
           grid-template-columns: repeat(2, 1fr);
+        }
+        .stat-item:nth-child(2)::after {
+          display: none;
         }
       }
       @media (max-width: 768px) {
@@ -1097,7 +1215,7 @@
           padding: 80px 20px;
         }
         #hero {
-          padding: 140px 20px 60px;
+          padding: 140px 20px 70px;
         }
         .hero-title {
           letter-spacing: -1px;
@@ -1109,36 +1227,46 @@
         .btn-gold,
         .btn-outline {
           width: 100%;
-          max-width: 300px;
+          max-width: 280px;
           text-align: center;
         }
         .stats-bar {
           grid-template-columns: repeat(2, 1fr);
         }
         .clients-row {
-          gap: 10px;
+          gap: 8px;
         }
         .client-badge {
-          padding: 12px 20px;
-          font-size: 0.75rem;
+          padding: 11px 18px;
+          font-size: 0.7rem;
+          letter-spacing: 1.5px;
         }
         .cap-grid {
-          grid-template-columns: 1fr;
+          grid-template-columns: 1fr 1fr;
         }
         .projects-grid {
           grid-template-columns: 1fr;
         }
+        .proj-card {
+          height: 340px;
+        }
         .ongoing-grid {
           grid-template-columns: 1fr;
+        }
+        .ongoing-card {
+          height: 360px;
         }
         .values-grid {
           grid-template-columns: repeat(2, 1fr);
         }
         .machinery-grid {
-          grid-template-columns: 1fr;
+          grid-template-columns: 1fr 1fr;
         }
         .form-row {
           grid-template-columns: 1fr;
+        }
+        .contact-form {
+          padding: 24px;
         }
         .footer-inner {
           flex-direction: column;
@@ -1156,10 +1284,14 @@
           padding: 60px 20px;
         }
         footer {
-          padding: 40px 20px 30px;
+          padding: 40px 20px 32px;
         }
         .map-wrap iframe {
           height: 280px;
+        }
+        .btn-submit {
+          align-self: stretch;
+          text-align: center;
         }
       }
       @media (max-width: 480px) {
@@ -1167,13 +1299,25 @@
           grid-template-columns: 1fr 1fr;
         }
         .stat-num {
-          font-size: 1.8rem;
+          font-size: 1.6rem;
+        }
+        .cap-grid {
+          grid-template-columns: 1fr;
         }
         .values-grid {
           grid-template-columns: 1fr 1fr;
         }
+        .machinery-grid {
+          grid-template-columns: 1fr;
+        }
         .nav-logo img {
-          height: 44px;
+          height: 36px;
+        }
+        .proj-card {
+          height: 300px;
+        }
+        .ongoing-card {
+          height: 320px;
         }
       }
     </style>
@@ -1181,83 +1325,89 @@
   <body>
     <!-- Navigation -->
     <nav id="navbar">
-      <a href="#hero" class="nav-logo"
-        ><img src="image.png" alt="KD Constructions Logo"
-      /></a>
+      <a href="#hero" class="nav-logo">
+        <img src="image.png" alt="KD Constructions" />
+      </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#ongoing">Ongoing Projects</a></li>
+        <li><a href="#ongoing">Ongoing</a></li>
         <li><a href="#clients">Clients</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <a href="#contact" class="nav-cta">Get In Touch</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
     </nav>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      role="dialog"
+      aria-label="Navigation menu"
+    >
       <a href="#about" class="mobile-link">About</a>
       <a href="#capabilities" class="mobile-link">Capabilities</a>
       <a href="#projects" class="mobile-link">Projects</a>
-      <a href="#ongoing" class="mobile-link">Ongoing Projects</a>
+      <a href="#ongoing" class="mobile-link">Ongoing</a>
       <a href="#clients" class="mobile-link">Clients</a>
       <a href="#contact" class="mobile-link">Contact</a>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-content anim">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-bg-rail" aria-hidden="true"></div>
+      <div class="hero-gradient" aria-hidden="true"></div>
+      <div class="hero-content reveal">
         <div class="hero-badge">
-          Est. 2004 — Trusted Government Infrastructure Partner
+          Est. 2004 — Government Infrastructure Partner
         </div>
         <h1 class="hero-title">
-          Building Excellence,
-          <em>Brick by Brick</em>
+          Building Excellence,<br /><em>Brick by Brick</em>
         </h1>
         <p class="hero-sub">
-          Government infrastructure partner since 2004. 500+ personnel, ₹260
-          Crores delivered. Trusted by Indian Railways, CIDCO &amp; MRVC.
+          Trusted by Indian Railways, CIDCO and MRVC for two decades of
+          infrastructure that shapes Maharashtra.
         </p>
         <div class="hero-actions">
           <a href="#projects" class="btn-gold">View Our Projects</a>
           <a href="#contact" class="btn-outline">Contact Us</a>
         </div>
       </div>
-      <div class="stats-bar anim">
+      <div class="stats-bar reveal">
         <div class="stat-item">
-          <div class="stat-num" data-target="500">0</div>
+          <div class="stat-num" data-target="500" data-suffix="+">0</div>
           <div class="stat-label">Personnel</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="20">0</div>
+          <div class="stat-num" data-target="20" data-suffix="+">0</div>
           <div class="stat-label">Years</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="260">0</div>
-          <div class="stat-label">Crores Delivered</div>
+          <div class="stat-num" data-target="4" data-suffix="">0</div>
+          <div class="stat-label">Locations</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="4">0</div>
-          <div class="stat-label">Locations</div>
+          <div class="stat-text">Indian Railways</div>
+          <div class="stat-label">Partner</div>
         </div>
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Clients Section -->
+    <!-- Clients -->
     <section id="clients">
-      <div class="clients-inner">
-        <div class="section-center anim">
+      <div class="section-container">
+        <div class="section-center reveal">
           <div class="section-label">Trusted Partnerships</div>
           <h2 class="section-title">Trusted By India's Biggest Institutions</h2>
         </div>
-        <div class="clients-row anim">
+        <div class="clients-row reveal">
           <div class="client-badge">Indian Railways</div>
           <div class="client-badge">CIDCO</div>
           <div class="client-badge">NMMC</div>
@@ -1267,114 +1417,219 @@
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- About Section -->
+    <!-- About -->
     <section id="about">
-      <div class="about-grid">
-        <div class="about-text anim">
-          <div class="section-label">About Us</div>
-          <h2 class="section-title">
-            Two Decades of Infrastructure Excellence
-          </h2>
-          <p>
-            Founded in 2004, KD Constructions is a leading multi-disciplinary
-            engineering company specializing in government infrastructure across
-            Maharashtra. We deliver complex civil, mechanical, fabrication and
-            electrical projects for India's most critical railway and urban
-            development initiatives.
-          </p>
-          <div class="about-checks">
-            <div class="about-check">
-              <span class="check">✓</span> Fully self-owned equipment fleet
-            </div>
-            <div class="about-check">
-              <span class="check">✓</span> In-house civil, mechanical,
-              fabrication &amp; electrical teams
-            </div>
-            <div class="about-check">
-              <span class="check">✓</span> Zero-defect, on-time project delivery
-            </div>
-            <div class="about-check">
-              <span class="check">✓</span> Presence in Mumbai, Navi Mumbai,
-              Bhusawal &amp; Dhule
+      <div class="section-container">
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <div class="section-label">About Us</div>
+            <h2 class="section-title">
+              Two Decades of Infrastructure Excellence
+            </h2>
+            <p>
+              Founded in 2004, KD Constructions is a leading multi-disciplinary
+              engineering company specializing in government infrastructure
+              across Maharashtra. We deliver complex civil, mechanical,
+              fabrication and electrical projects for India's most critical
+              railway and urban development initiatives.
+            </p>
+            <div class="about-checks">
+              <div class="about-check">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Fully self-owned equipment fleet
+              </div>
+              <div class="about-check">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                In-house civil, mechanical, fabrication &amp; electrical teams
+              </div>
+              <div class="about-check">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Zero-defect, on-time project delivery
+              </div>
+              <div class="about-check">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Presence in Mumbai, Navi Mumbai, Bhusawal &amp; Dhule
+              </div>
             </div>
           </div>
-        </div>
-        <div class="vision-mission anim">
-          <div class="vm-card">
-            <h3>Our Vision</h3>
-            <p>
-              To be a trusted engineering partner delivering sustainable, safe
-              and high-quality infrastructure that strengthens India's
-              transportation and urban development.
-            </p>
-          </div>
-          <div class="vm-card">
-            <h3>Our Mission</h3>
-            <p>
-              Deliver zero-defect, on-time projects while ensuring safety and
-              compliance. Build long-term relationships with government bodies.
-              Maintain transparency, integrity and accountability.
-            </p>
+          <div class="vision-mission reveal">
+            <div class="vm-card">
+              <h3>Our Vision</h3>
+              <p>
+                To be a trusted engineering partner delivering sustainable, safe
+                and high-quality infrastructure that strengthens India's
+                transportation and urban development.
+              </p>
+            </div>
+            <div class="vm-card">
+              <h3>Our Mission</h3>
+              <p>
+                Deliver zero-defect, on-time projects while ensuring safety and
+                compliance. Build long-term relationships with government
+                bodies. Maintain transparency, integrity and accountability.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Capabilities Section -->
+    <!-- Capabilities -->
     <section id="capabilities">
       <div
-        class="section-center anim"
-        style="max-width: 1200px; margin: 0 auto 0"
+        class="section-center reveal"
+        style="max-width: 1200px; margin: 0 auto"
       >
         <div class="section-label">Our Expertise</div>
-        <h2 class="section-title">Comprehensive Engineering Capabilities</h2>
+        <h2 class="section-title">Engineering Capabilities</h2>
         <p class="section-sub">
           End-to-end infrastructure solutions across civil, mechanical, and
           electrical disciplines
         </p>
       </div>
       <div class="cap-grid">
-        <div class="cap-card anim">
+        <div class="cap-card reveal">
+          <svg
+            class="cap-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4" />
+          </svg>
           <h3>Civil Infrastructure</h3>
           <ul class="cap-list">
             <li>Railway stations</li>
             <li>Carsheds &amp; workshops</li>
             <li>Municipal buildings</li>
-            <li>Foundations &amp; RCC structures</li>
+            <li>Foundations &amp; RCC</li>
           </ul>
         </div>
-        <div class="cap-card anim">
+        <div class="cap-card reveal reveal-delay-1">
+          <svg
+            class="cap-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 4h16M4 8h16M4 12h16M4 16h16M4 20h16M8 4v16M16 4v16" />
+          </svg>
           <h3>Heavy Structural Fabrication</h3>
           <ul class="cap-list">
             <li>Foot-over-bridges</li>
             <li>Cover-over-platforms</li>
             <li>Steel roofing systems</li>
-            <li>Large-span industrial sheds</li>
+            <li>Industrial sheds</li>
           </ul>
         </div>
-        <div class="cap-card anim">
+        <div class="cap-card reveal reveal-delay-2">
+          <svg
+            class="cap-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.07 4.93A10 10 0 1 1 4.93 19.07M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+            />
+          </svg>
           <h3>Mechanical Engineering</h3>
           <ul class="cap-list">
             <li>Traverser installation</li>
             <li>EOT cranes</li>
             <li>Workshop machinery</li>
-            <li>Turn-key mechanical packages</li>
+            <li>Turn-key packages</li>
           </ul>
         </div>
-        <div class="cap-card anim">
+        <div class="cap-card reveal reveal-delay-3">
+          <svg
+            class="cap-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
           <h3>Electrical Engineering</h3>
           <ul class="cap-list">
             <li>6–25MW substations</li>
             <li>Cable laying</li>
             <li>Railway workshop electrical</li>
-            <li>Power distribution systems</li>
+            <li>Power distribution</li>
           </ul>
         </div>
-        <div class="cap-card anim">
+        <div class="cap-card reveal reveal-delay-4">
+          <svg
+            class="cap-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 11l3 3L22 4" />
+            <path
+              d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+            />
+          </svg>
           <h3>Project Management</h3>
           <ul class="cap-list">
             <li>QA/QC systems</li>
@@ -1386,31 +1641,25 @@
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Landmark Projects Section -->
+    <!-- Completed Projects -->
     <section id="projects">
       <div
-        class="section-center anim"
-        style="max-width: 1200px; margin: 0 auto 0"
+        class="section-center reveal"
+        style="max-width: 1200px; margin: 0 auto"
       >
         <div class="section-label">Our Portfolio</div>
         <h2 class="section-title">Projects That Define India</h2>
         <p class="section-sub">
-          From Prime Minister inaugurated stations to record crane operations
+          From PM-inaugurated stations to record crane operations
         </p>
       </div>
       <div class="projects-grid">
-        <div class="proj-card anim">
-          <div class="proj-img">
-            <img
-              src="uran.png"
-              alt="Uran Railway Station - Final station on Mumbai Harbour Line"
-              loading="lazy"
-            />
+        <div class="proj-card reveal">
+          <img src="uran.png" alt="Uran Railway Station" loading="lazy" />
+          <div class="proj-overlay">
             <div class="proj-tag">Completed · ₹110+ Crores</div>
-          </div>
-          <div class="proj-body">
             <h3>Uran Railway Station</h3>
             <p>
               Final station on the Harbour Line. Two underground pedestrian
@@ -1418,32 +1667,29 @@
             </p>
           </div>
         </div>
-        <div class="proj-card anim">
-          <div class="proj-img">
-            <img
-              src="nhave.png"
-              alt="Nhava Sheva Railway Station - Prime Minister Inaugurated"
-              loading="lazy"
-            />
+        <div class="proj-card reveal reveal-delay-1">
+          <img
+            src="nhave.png"
+            alt="Nhava Sheva Railway Station"
+            loading="lazy"
+          />
+          <div class="proj-overlay">
             <div class="proj-tag">Completed · PM Inaugurated</div>
-          </div>
-          <div class="proj-body">
             <h3>Nhava Sheva Station</h3>
             <p>
-              3000+ MT structural steel. 270m platform. 29,000 m³ RCC completed.
+              3,000+ MT structural steel. 270m platform. 29,000 m³ RCC
+              completed.
             </p>
           </div>
         </div>
-        <div class="proj-card anim">
-          <div class="proj-img">
-            <img
-              src="sanpada.png"
-              alt="Sanpada Railway Car-Shed Complex"
-              loading="lazy"
-            />
+        <div class="proj-card reveal">
+          <img
+            src="sanpada.png"
+            alt="Sanpada Railway Car-Shed"
+            loading="lazy"
+          />
+          <div class="proj-overlay">
             <div class="proj-tag">Completed · 500,000 Sq.Ft</div>
-          </div>
-          <div class="proj-body">
             <h3>Sanpada Railway Car-Shed</h3>
             <p>
               Multiple car-sheds 230m × 22m each. Zero-tolerance precision
@@ -1451,16 +1697,14 @@
             </p>
           </div>
         </div>
-        <div class="proj-card anim">
-          <div class="proj-img">
-            <img
-              src="matunga.png"
-              alt="Matunga Railway Workshop - Multi-discipline Engineering"
-              loading="lazy"
-            />
+        <div class="proj-card reveal reveal-delay-1">
+          <img
+            src="matunga.png"
+            alt="Matunga Railway Workshop"
+            loading="lazy"
+          />
+          <div class="proj-overlay">
             <div class="proj-tag">Completed · ₹150 Crores</div>
-          </div>
-          <div class="proj-body">
             <h3>Matunga Railway Workshop</h3>
             <p>
               Composite civil, mechanical and electrical works for Indian
@@ -1468,16 +1712,10 @@
             </p>
           </div>
         </div>
-        <div class="proj-card anim">
-          <div class="proj-img">
-            <img
-              src="vashi.png"
-              alt="Vashi Flyover Bridge - Heavy Crane Operations"
-              loading="lazy"
-            />
+        <div class="proj-card reveal">
+          <img src="vashi.png" alt="Vashi Flyover Bridge" loading="lazy" />
+          <div class="proj-overlay">
             <div class="proj-tag">Completed · 650T Cranes</div>
-          </div>
-          <div class="proj-body">
             <h3>Vashi Flyover Bridge</h3>
             <p>
               Deployed two 650T telescopic cranes — among the biggest crane
@@ -1485,16 +1723,10 @@
             </p>
           </div>
         </div>
-        <div class="proj-card anim">
-          <div class="proj-img">
-            <img
-              src="bonkode.png"
-              alt="Bonkode Skywalk - Eco-friendly Pedestrian Infrastructure"
-              loading="lazy"
-            />
+        <div class="proj-card reveal reveal-delay-1">
+          <img src="bonkode.png" alt="Bonkode Skywalk" loading="lazy" />
+          <div class="proj-overlay">
             <div class="proj-tag">Completed · 72×3M</div>
-          </div>
-          <div class="proj-body">
             <h3>Bonkode Skywalk</h3>
             <p>
               Eco-friendly skywalk on Thane-Belapur highway connecting Bonkode
@@ -1505,13 +1737,13 @@
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Ongoing Projects Section -->
+    <!-- Ongoing Projects -->
     <section id="ongoing">
       <div
-        class="section-center anim"
-        style="max-width: 1200px; margin: 0 auto 0"
+        class="section-center reveal"
+        style="max-width: 1200px; margin: 0 auto"
       >
         <div class="section-label">Current Work</div>
         <h2 class="section-title">Currently Building</h2>
@@ -1520,16 +1752,14 @@
         </p>
       </div>
       <div class="ongoing-grid">
-        <div class="ongoing-card anim">
-          <div class="ongoing-img">
-            <img
-              src="panvel.png"
-              alt="Panvel-Karjat Railway Line Development"
-              loading="lazy"
-            />
+        <div class="ongoing-card reveal">
+          <img
+            src="panvel.png"
+            alt="Panvel–Karjat Railway Line"
+            loading="lazy"
+          />
+          <div class="ongoing-overlay">
             <div class="ongoing-active">Active</div>
-          </div>
-          <div class="ongoing-body">
             <h3>Panvel–Karjat Railway Line (MRVC)</h3>
             <p>
               Four new stations: Karjat, Chowk, Mohape &amp; Chikhale.
@@ -1537,16 +1767,14 @@
             </p>
           </div>
         </div>
-        <div class="ongoing-card anim">
-          <div class="ongoing-img">
-            <img
-              src="harbour.png"
-              alt="AIIB-Funded Mumbai Suburban Stations"
-              loading="lazy"
-            />
+        <div class="ongoing-card reveal reveal-delay-1">
+          <img
+            src="harbour.png"
+            alt="AIIB-Funded Mumbai Suburban Stations"
+            loading="lazy"
+          />
+          <div class="ongoing-overlay">
             <div class="ongoing-active">Active</div>
-          </div>
-          <div class="ongoing-body">
             <h3>AIIB-Funded Mumbai Suburban Stations</h3>
             <p>
               Four stations: Mankhurd, Govandi, GTB Nagar &amp; Chembur.
@@ -1557,53 +1785,110 @@
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Values Section -->
+    <!-- Values -->
     <section id="values">
       <div
-        class="section-center anim"
-        style="max-width: 1200px; margin: 0 auto 0"
+        class="section-center reveal"
+        style="max-width: 1200px; margin: 0 auto"
       >
         <div class="section-label">Core Principles</div>
         <h2 class="section-title">Our Commitment</h2>
       </div>
       <div class="values-grid">
-        <div class="value-card anim">
-          <div class="value-icon">⭐</div>
+        <div class="value-card reveal">
+          <svg
+            class="value-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            />
+          </svg>
           <h3>Quality</h3>
-          <p>Precision and engineering excellence in every project</p>
+          <p>Engineering excellence in every project</p>
         </div>
-        <div class="value-card anim">
-          <div class="value-icon">🛡️</div>
+        <div class="value-card reveal reveal-delay-1">
+          <svg
+            class="value-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
           <h3>Safety</h3>
           <p>Strict adherence to standards at every site</p>
         </div>
-        <div class="value-card anim">
-          <div class="value-icon">🤝</div>
+        <div class="value-card reveal reveal-delay-2">
+          <svg
+            class="value-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            />
+          </svg>
           <h3>Integrity</h3>
-          <p>Ethical working and transparent operations</p>
+          <p>Ethical and transparent operations</p>
         </div>
-        <div class="value-card anim">
-          <div class="value-icon">📈</div>
+        <div class="value-card reveal reveal-delay-3">
+          <svg
+            class="value-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
           <h3>Reliability</h3>
           <p>On-time, budget-focused execution</p>
         </div>
-        <div class="value-card anim">
-          <div class="value-icon">💡</div>
+        <div class="value-card reveal reveal-delay-4">
+          <svg
+            class="value-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 2a7 7 0 0 1 7 7c0 3-2 5.5-4 7.5L12 20l-3-3.5C7 14.5 5 12 5 9a7 7 0 0 1 7-7z"
+            />
+            <circle cx="12" cy="9" r="2.5" />
+          </svg>
           <h3>Innovation</h3>
           <p>New materials, methods and technology</p>
         </div>
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Machinery Section -->
+    <!-- Machinery -->
     <section id="machinery">
       <div
-        class="section-center anim"
-        style="max-width: 1200px; margin: 0 auto 0"
+        class="section-center reveal"
+        style="max-width: 1200px; margin: 0 auto"
       >
         <div class="section-label">Equipment &amp; Resources</div>
         <h2 class="section-title">Fully Self-Sufficient Operations</h2>
@@ -1612,9 +1897,19 @@
         </p>
       </div>
       <div class="machinery-grid">
-        <div class="mach-card anim">
-          <div class="mach-icon">🚜</div>
-          <h3>Civil Machinery</h3>
+        <div class="mach-card reveal">
+          <svg
+            class="mach-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4" />
+          </svg>
+          <h3>Civil</h3>
           <ul class="mach-list">
             <li>Excavators</li>
             <li>Transit mixers</li>
@@ -1622,8 +1917,22 @@
             <li>Concrete pumps</li>
           </ul>
         </div>
-        <div class="mach-card anim">
-          <div class="mach-icon">🔧</div>
+        <div class="mach-card reveal reveal-delay-1">
+          <svg
+            class="mach-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.07 4.93A10 10 0 1 1 4.93 19.07" />
+            <path
+              d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2"
+            />
+          </svg>
           <h3>Fabrication</h3>
           <ul class="mach-list">
             <li>Welding machines</li>
@@ -1632,18 +1941,42 @@
             <li>Precision tools</li>
           </ul>
         </div>
-        <div class="mach-card anim">
-          <div class="mach-icon">🏗️</div>
+        <div class="mach-card reveal reveal-delay-2">
+          <svg
+            class="mach-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M2 20h20M4 20V10M20 20V10M8 20v-6h8v6M12 4v6M8 7h8" />
+            <path d="M6 10h12" />
+          </svg>
           <h3>Heavy Lifting</h3>
           <ul class="mach-list">
             <li>650T telescopic cranes</li>
             <li>EOT crane systems</li>
-            <li>Specialized equipment</li>
+            <li>Specialised equipment</li>
             <li>Installation rigs</li>
           </ul>
         </div>
-        <div class="mach-card anim">
-          <div class="mach-icon">🚛</div>
+        <div class="mach-card reveal reveal-delay-3">
+          <svg
+            class="mach-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="1" y="3" width="15" height="13" />
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+            <circle cx="5.5" cy="18.5" r="2.5" />
+            <circle cx="18.5" cy="18.5" r="2.5" />
+          </svg>
           <h3>Transport</h3>
           <ul class="mach-list">
             <li>Full truck fleet</li>
@@ -1655,39 +1988,78 @@
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section id="contact">
       <div
-        class="section-center anim"
-        style="max-width: 1200px; margin: 0 auto 0"
+        class="section-center reveal"
+        style="max-width: 1200px; margin: 0 auto"
       >
         <div class="section-label">Get In Touch</div>
         <h2 class="section-title">Partner With Us</h2>
       </div>
       <div class="contact-grid">
-        <div class="contact-details anim">
+        <div class="contact-details reveal">
           <div class="contact-item">
-            <span class="ci-icon">📍</span>
+            <svg
+              class="ci-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
             <span
               >1313-1314, Real Tech Park, Sector-30A, Vashi, Navi Mumbai –
               400703</span
             >
           </div>
           <div class="contact-item">
-            <span class="ci-icon">📞</span>
-            <span
-              ><a href="tel:+919867606692">+91 98676 06692</a> /
-              <a href="tel:+919892243804">+91 98922 43804</a></span
+            <svg
+              class="ci-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l1.84-1.84a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+              />
+            </svg>
+            <span>
+              <a href="tel:+919867606692">+91 98676 06692</a> /
+              <a href="tel:+919892243804">+91 98922 43804</a> /
+              <a href="tel:02227815380">022-27815380</a>
+            </span>
           </div>
           <div class="contact-item">
-            <span class="ci-icon">☎️</span>
-            <span><a href="tel:02227815380">022-27815380</a></span>
-          </div>
-          <div class="contact-item">
-            <span class="ci-icon">✉️</span>
+            <svg
+              class="ci-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
             <span
               ><a href="mailto:infra@kdconstructions.net"
                 >infra@kdconstructions.net</a
@@ -1695,74 +2067,153 @@
             >
           </div>
           <div class="contact-item">
-            <span class="ci-icon">👥</span>
+            <svg
+              class="ci-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
             <span
               ><a href="mailto:hr@kdconstructions.net"
                 >hr@kdconstructions.net</a
-              ></span
+              >
+              (HR)</span
             >
           </div>
           <div class="contact-item">
-            <span class="ci-icon">🔗</span>
+            <svg
+              class="ci-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
             <span
               ><a
                 href="https://linkedin.com/company/k-d-constructions/"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 >linkedin.com/company/k-d-constructions/</a
               ></span
             >
           </div>
         </div>
+
         <form
-          class="contact-form anim"
+          class="contact-form reveal"
           onsubmit="
             event.preventDefault();
-            alert('Thank you! We will get back to you shortly.');
+            this.querySelector('.btn-submit').textContent = 'Sent!';
+            setTimeout(
+              () =>
+                (this.querySelector('.btn-submit').textContent =
+                  'Send Enquiry'),
+              2000,
+            );
           "
         >
           <div class="form-row">
-            <input type="text" placeholder="Your Name" required />
-            <input type="text" placeholder="Company" />
+            <div>
+              <label for="cf-name" class="form-label">Your Name *</label>
+              <input
+                id="cf-name"
+                type="text"
+                placeholder="Full name"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <div>
+              <label for="cf-company" class="form-label">Company</label>
+              <input
+                id="cf-company"
+                type="text"
+                placeholder="Organisation"
+                autocomplete="organization"
+              />
+            </div>
           </div>
           <div class="form-row">
-            <input type="email" placeholder="Email Address" required />
-            <input type="tel" placeholder="Phone Number" />
+            <div>
+              <label for="cf-email" class="form-label">Email Address *</label>
+              <input
+                id="cf-email"
+                type="email"
+                placeholder="you@company.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+            <div>
+              <label for="cf-phone" class="form-label">Phone Number</label>
+              <input
+                id="cf-phone"
+                type="tel"
+                placeholder="+91 XXXXX XXXXX"
+                autocomplete="tel"
+              />
+            </div>
           </div>
-          <select required>
-            <option value="" disabled selected>Project Type</option>
-            <option value="railway">Railway Infrastructure</option>
-            <option value="civil">Civil Construction</option>
-            <option value="fabrication">Structural Fabrication</option>
-            <option value="mechanical">Mechanical Engineering</option>
-            <option value="electrical">Electrical Engineering</option>
-            <option value="other">Other</option>
-          </select>
-          <textarea
-            placeholder="Tell us about your project..."
-            rows="5"
-          ></textarea>
+          <div>
+            <label for="cf-type" class="form-label">Project Type *</label>
+            <select id="cf-type" required>
+              <option value="" disabled selected>Select project type</option>
+              <option value="railway">Railway Infrastructure</option>
+              <option value="civil">Civil Construction</option>
+              <option value="fabrication">Structural Fabrication</option>
+              <option value="mechanical">Mechanical Engineering</option>
+              <option value="electrical">Electrical Engineering</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="cf-message" class="form-label">Message</label>
+            <textarea
+              id="cf-message"
+              placeholder="Tell us about your project..."
+              rows="4"
+            ></textarea>
+          </div>
           <button type="submit" class="btn-submit">Send Enquiry</button>
         </form>
       </div>
     </section>
 
-    <div class="gold-divider"></div>
+    <div class="gold-line"></div>
 
     <!-- Google Maps -->
     <section id="map">
-      <div class="anim">
+      <div class="reveal">
         <div class="section-label">Location</div>
         <h2 class="section-title">Find Us</h2>
       </div>
-      <div class="map-wrap anim">
+      <div class="map-wrap reveal">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d17938.035173541673!2d72.99264093011936!3d19.06341364087394!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c146687fb09d%3A0x2e9898bddf668c14!2sK.D.%20Constructions!5e0!3m2!1sen!2sin!4v1774550885901!5m2!1sen!2sin"
           style="border: 0"
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          title="KD Constructions Office Location"
+          title="KD Constructions Office — Vashi, Navi Mumbai"
         ></iframe>
       </div>
     </section>
@@ -1770,69 +2221,82 @@
     <!-- Footer -->
     <footer>
       <div class="footer-inner">
-        <a href="#hero" class="footer-logo"
-          ><img src="image.png" alt="KD Constructions"
-        /></a>
+        <a href="#hero" class="footer-logo">
+          <img src="image.png" alt="KD Constructions" />
+        </a>
         <ul class="footer-links">
           <li><a href="#about">About</a></li>
           <li><a href="#capabilities">Capabilities</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#ongoing">Ongoing</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-bottom">
         <p>
-          © <span id="copy-year">2025</span> Kailashchandra Dilipkumar
+          &copy; <span id="copy-year">2025</span> Kailashchandra Dilipkumar
           Constructions Pvt. Ltd. All rights reserved.
         </p>
-        <p>Proud infrastructure partner of <span>Indian Railways</span></p>
+        <p>
+          Proud infrastructure partner of
+          <span class="gold">Indian Railways</span>
+        </p>
       </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-      // Dynamic copyright year
+      /* Copyright year */
       const yearEl = document.getElementById("copy-year");
-      if (yearEl) yearEl.textContent = "2025";
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-      // Navbar scroll
+      /* Navbar scroll */
       const navbar = document.getElementById("navbar");
-      window.addEventListener("scroll", () => {
-        navbar.classList.toggle("scrolled", window.scrollY > 80);
-      });
+      let ticking = false;
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              navbar.classList.toggle("scrolled", window.scrollY > 60);
+              ticking = false;
+            });
+            ticking = true;
+          }
+        },
+        { passive: true },
+      );
 
-      // Mobile menu
+      /* Mobile menu */
       const hamburger = document.getElementById("hamburger");
       const mobileMenu = document.getElementById("mobileMenu");
       hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        mobileMenu.classList.toggle("active");
-        document.body.style.overflow = mobileMenu.classList.contains("active")
-          ? "hidden"
-          : "";
+        const open = hamburger.classList.toggle("active");
+        mobileMenu.classList.toggle("active", open);
+        hamburger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        document.body.style.overflow = open ? "hidden" : "";
       });
       document.querySelectorAll(".mobile-link").forEach((link) => {
         link.addEventListener("click", () => {
           hamburger.classList.remove("active");
           mobileMenu.classList.remove("active");
+          hamburger.setAttribute("aria-label", "Open menu");
           document.body.style.overflow = "";
         });
       });
 
-      // Scroll animations
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      /* Scroll-reveal */
+      const revealObserver = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("visible");
+          }),
+        { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
       );
-      document.querySelectorAll(".anim").forEach((el) => observer.observe(el));
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => revealObserver.observe(el));
 
-      // Animated counters
+      /* Animated counters */
       let countersDone = false;
       const counterObserver = new IntersectionObserver(
         (entries) => {
@@ -1843,20 +2307,13 @@
                 .querySelectorAll(".stat-num[data-target]")
                 .forEach((el) => {
                   const target = parseInt(el.dataset.target);
+                  const suffix = el.dataset.suffix || "+";
                   const duration = 2000;
                   const start = performance.now();
-                  const isCrores = el.dataset.target === "260";
-
                   function update(now) {
-                    const elapsed = now - start;
-                    const progress = Math.min(elapsed / duration, 1);
+                    const progress = Math.min((now - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
-                    const current = Math.floor(eased * target);
-
-                    el.textContent = isCrores
-                      ? "₹" + current + "Cr+"
-                      : current + "+";
-
+                    el.textContent = Math.floor(eased * target) + suffix;
                     if (progress < 1) requestAnimationFrame(update);
                   }
                   requestAnimationFrame(update);
@@ -1869,12 +2326,12 @@
       const statsBar = document.querySelector(".stats-bar");
       if (statsBar) counterObserver.observe(statsBar);
 
-      // Smooth scroll
+      /* Smooth anchor scroll */
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
-          e.preventDefault();
           const target = document.querySelector(this.getAttribute("href"));
           if (target) {
+            e.preventDefault();
             target.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         });

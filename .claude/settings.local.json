@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api:*)",
+      "Bash(curl -s \"https://api.github.com/repos/tonmoyspeaking/construction-website/contents/\")",
+      "Bash(python3 -c \"import sys,json; [print\\(f[''''name'''']\\) for f in json.load\\(sys.stdin\\)]\")",
+      "Bash(ls -la \"c:/Users/samue/OneDrive/Desktop/construction-website/\"*.png)",
+      "Read(//c/Users/samue/OneDrive/Desktop/construction-website/**)",
+      "Bash(python3 \"c:/Users/samue/OneDrive/Desktop/construction-website/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"government infrastructure construction railway premium corporate\" --design-system -p \"KD Constructions\")",
+      "Bash(python3 \"c:/Users/samue/OneDrive/Desktop/construction-website/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"animation scroll reveal luxury premium\" --domain ux -n 5)",
+      "Bash(python3 \"c:/Users/samue/OneDrive/Desktop/construction-website/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"responsive grid cards layout five columns\" --stack html-tailwind -n 5)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
+    ]
+  }
+}
