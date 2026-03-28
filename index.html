@@ -25,10 +25,10 @@
       }
 
       :root {
-        --black: #0a0a0a;
-        --black2: #111111;
-        --black3: #161616;
-        --black4: #1c1c1c;
+        --black: #0f1419;
+        --black2: #151c24;
+        --black3: #1a2332;
+        --black4: #1f2a3a;
         --gold: #c9a84c;
         --gold-light: #dfc06e;
         --gold-dark: #a88a30;
@@ -66,7 +66,7 @@
         background: var(--black);
       }
       ::-webkit-scrollbar-thumb {
-        background: #2a2a2a;
+        background: #2a3545;
         border-radius: 3px;
       }
 
@@ -104,7 +104,7 @@
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
       nav.scrolled {
-        background: rgba(10, 10, 10, 0.88);
+        background: rgba(15, 20, 25, 0.88);
         backdrop-filter: blur(30px);
         -webkit-backdrop-filter: blur(30px);
         padding: 14px 60px;
@@ -199,7 +199,7 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(10, 10, 10, 0.97);
+        background: rgba(15, 20, 25, 0.97);
         z-index: 999;
         flex-direction: column;
         align-items: center;
@@ -237,20 +237,17 @@
         position: absolute;
         inset: 0;
         z-index: 0;
-        background: url("shiv.png") center/cover no-repeat;
-        opacity: 0.15;
-      }
-      .hero-bg::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to bottom,
-          var(--black) 0%,
-          transparent 30%,
-          transparent 70%,
-          var(--black) 100%
-        );
+        background:
+          radial-gradient(
+            ellipse at 50% 0%,
+            rgba(201, 168, 76, 0.06) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 80%,
+            rgba(201, 168, 76, 0.04) 0%,
+            transparent 50%
+          );
       }
       .hero-content {
         position: relative;
@@ -291,7 +288,7 @@
         }
       }
       .hero-title {
-        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-size: clamp(3rem, 8vw, 6rem);
         font-weight: 700;
         letter-spacing: -2px;
         line-height: 1.08;
@@ -368,6 +365,7 @@
         background: var(--black2);
         padding: 36px 20px;
         text-align: center;
+        backdrop-filter: blur(10px);
       }
       .stat-num {
         font-family: "Playfair Display", serif;
@@ -1190,7 +1188,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#ongoing">Ongoing</a></li>
+        <li><a href="#ongoing">Ongoing Projects</a></li>
         <li><a href="#clients">Clients</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -1205,7 +1203,7 @@
       <a href="#about" class="mobile-link">About</a>
       <a href="#capabilities" class="mobile-link">Capabilities</a>
       <a href="#projects" class="mobile-link">Projects</a>
-      <a href="#ongoing" class="mobile-link">Ongoing</a>
+      <a href="#ongoing" class="mobile-link">Ongoing Projects</a>
       <a href="#clients" class="mobile-link">Clients</a>
       <a href="#contact" class="mobile-link">Contact</a>
     </div>
@@ -1218,11 +1216,12 @@
           Est. 2004 — Trusted Government Infrastructure Partner
         </div>
         <h1 class="hero-title">
-          Building India's<br />Railway <em>Infrastructure.</em>
+          Building Excellence,
+          <em>Brick by Brick</em>
         </h1>
         <p class="hero-sub">
-          500+ personnel. 20+ years. ₹260 Crores delivered. Trusted by Indian
-          Railways, CIDCO and MRVC.
+          Government infrastructure partner since 2004. 500+ personnel, ₹260
+          Crores delivered. Trusted by Indian Railways, CIDCO &amp; MRVC.
         </p>
         <div class="hero-actions">
           <a href="#projects" class="btn-gold">View Our Projects</a>
@@ -1783,8 +1782,8 @@
       </div>
       <div class="footer-bottom">
         <p>
-          © <span id="copy-year">2025</span> Kailashchandra Dilipkumar Constructions Pvt. Ltd. All rights
-          reserved.
+          © <span id="copy-year">2025</span> Kailashchandra Dilipkumar
+          Constructions Pvt. Ltd. All rights reserved.
         </p>
         <p>Proud infrastructure partner of <span>Indian Railways</span></p>
       </div>
@@ -1794,7 +1793,7 @@
     <script>
       // Dynamic copyright year
       const yearEl = document.getElementById("copy-year");
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      if (yearEl) yearEl.textContent = "2025";
 
       // Navbar scroll
       const navbar = document.getElementById("navbar");
@@ -1854,7 +1853,9 @@
                     const eased = 1 - Math.pow(1 - progress, 3);
                     const current = Math.floor(eased * target);
 
-                    el.textContent = isCrores ? "₹" + current + "Cr+" : current + "+";
+                    el.textContent = isCrores
+                      ? "₹" + current + "Cr+"
+                      : current + "+";
 
                     if (progress < 1) requestAnimationFrame(update);
                   }
